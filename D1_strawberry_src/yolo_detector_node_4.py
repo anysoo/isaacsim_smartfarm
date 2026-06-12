@@ -112,7 +112,7 @@ class YoloDetectorNode(Node):
             fy = info_msg.k[4]; cy = info_msg.k[5]
 
             # YOLO 추론 (확대 이미지 기준)
-            results        = self.model(scaled, verbose=False, conf=0.8)
+            results        = self.model(scaled, verbose=False, conf=0.5)
             annotated_frame = results[0].plot()
             depth_h, depth_w = depth_image.shape[:2]
 

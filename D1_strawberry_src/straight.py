@@ -30,7 +30,7 @@ import time
 import json
 import os
 
-DRIVE_FRAMES = 370   # 직진 유지 프레임 수 (370 × 0.05s = 18.5초 직진)
+DRIVE_FRAMES = 400   # 직진 유지 프레임 수 (370 × 0.05s = 18.5초 직진)
 PAUSE_SEC    = 3.0   # 각 정차 위치에서 딸기 감지를 기다리는 시간 (초)
 SEGMENTS     = 5     # 총 정차 구간 수 (화분 개수와 일치)
 
