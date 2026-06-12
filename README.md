@@ -26,7 +26,7 @@
 
 전체 시스템은 **Isaac Sim 시뮬레이션**, **YOLO 기반 인식**, **ROS2 topic/service/action 통신**, **Nav2 자율주행**, **UDP bridge 기반 Spot 제어**로 구성됩니다.
 
-- SmartFarm usd인 kitkit2.usd는 100MB가 넘어서 제외했습니다.
+- **SmartFarm usd인 kitkit2.usd는 100MB가 넘어서 제외했습니다.**
 ---
 
 ## 🧭 Table of Contents
