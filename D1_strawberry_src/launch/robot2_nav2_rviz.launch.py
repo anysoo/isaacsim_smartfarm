@@ -1,12 +1,16 @@
+import os
 from launch import LaunchDescription
 from launch.actions import ExecuteProcess, TimerAction, SetEnvironmentVariable
 from launch_ros.actions import Node
 
 
 def generate_launch_description():
-    map_yaml = "/home/parkjieon/dev_ws/isaac_sim/IsaacSim-ros_workspaces/humble_ws/src/navigation/carter_navigation/maps/carter_warehouse_navigation.yaml"
-    nav2_params = "/home/parkjieon/dev_ws/robot2_nav2_params.yaml"
-    rviz_config = "/home/parkjieon/dev_ws/robot2_spot.rviz"
+    # launch/ 폴더의 상위 = D1_strawberry_src/
+    pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    map_yaml    = os.path.join(pkg_dir, "maps", "carter_warehouse_navigation.yaml")
+    nav2_params = os.path.join(pkg_dir, "robot2_nav2_params.yaml")
+    rviz_config = os.path.join(pkg_dir, "robot2_spot.rviz")
 
     return LaunchDescription([
         SetEnvironmentVariable("ROS_DOMAIN_ID", "135"),
@@ -17,22 +21,14 @@ def generate_launch_description():
             executable="map_server",
             name="map_server",
             output="screen",
-            parameters=[
-                {"yaml_filename": map_yaml}
-            ],
+            parameters=[{"yaml_filename": map_yaml}],
         ),
 
         TimerAction(
             period=2.0,
             actions=[
                 ExecuteProcess(
-                    cmd=[
-                        "ros2",
-                        "lifecycle",
-                        "set",
-                        "/map_server",
-                        "configure",
-                    ],
+                    cmd=["ros2", "lifecycle", "set", "/map_server", "configure"],
                     output="screen",
                 )
             ],
@@ -42,13 +38,7 @@ def generate_launch_description():
             period=4.0,
             actions=[
                 ExecuteProcess(
-                    cmd=[
-                        "ros2",
-                        "lifecycle",
-                        "set",
-                        "/map_server",
-                        "activate",
-                    ],
+                    cmd=["ros2", "lifecycle", "set", "/map_server", "activate"],
                     output="screen",
                 )
             ],
@@ -59,10 +49,7 @@ def generate_launch_description():
             actions=[
                 ExecuteProcess(
                     cmd=[
-                        "ros2",
-                        "launch",
-                        "nav2_bringup",
-                        "navigation_launch.py",
+                        "ros2", "launch", "nav2_bringup", "navigation_launch.py",
                         "use_sim_time:=False",
                         f"params_file:={nav2_params}",
                         "autostart:=True",
@@ -76,11 +63,7 @@ def generate_launch_description():
             period=8.0,
             actions=[
                 ExecuteProcess(
-                    cmd=[
-                        "rviz2",
-                        "-d",
-                        rviz_config,
-                    ],
+                    cmd=["rviz2", "-d", rviz_config],
                     output="screen",
                 )
             ],
